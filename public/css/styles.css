@@ -23,9 +23,11 @@
   background-color: var(--white-blue) !important;
 }
 
-
-
 #plans {
+  overflow: auto;
+}
+
+#signup {
   overflow: auto;
 }
 
@@ -11513,6 +11515,7 @@ html {
   }
 }
 .form-floating input.form-control,
+.form-floating select.form-control,
 .form-floating textarea.form-control {
   border-left: 0;
   border-right: 0;
@@ -11521,7 +11524,8 @@ html {
   border-width: 1px;
 }
 .form-floating input.form-control:focus,
-.form-floating textarea.form-control:focus {
+.form-floating textarea.form-control:focus,
+.form-floating select.form-control:focus {
   box-shadow: none;
 }
 .form-floating label {
