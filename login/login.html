@@ -4,6 +4,9 @@
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <script src="/login/js/index.js" type="module"></script>
+    <script src="/login/js/scripts.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             margin: 0;
@@ -168,11 +171,11 @@
     <div class="container">
         <div class="box">
             <div class="item banner">
-                <img id="banner" src="imgs/service.png">
+                <img id="banner" src="/public/imgs/service.png">
             </div>
             <div class="item login">
                 <form class="login">
-                    <img id="logo" src="imgs/logo.png">
+                    <img id="logo" src="/public/imgs/logo.png">
                     <label for="username" class="inp">
                         <input type="text" id="username" placeholder="&nbsp;">
                         <span class="label">Usuário</span>
@@ -182,7 +185,7 @@
                         <input type="text" id="password" placeholder="&nbsp;">
                         <span class="label">Senha</span>
                         <span class="focus-bg"></span>
-                        <input type="button" value="Entrar" />
+                        <input type="button" value="Entrar" onclick="userLogin()" />
                         <a href="/#signup">
                             <input type="button" value="Não tem login? Cadastre-se" />
                         </a>

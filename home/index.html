@@ -10,8 +10,12 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
     type="text/css" />
-  <link href="/css/styles.css" rel="stylesheet" />
-  <script src="./js/index.js" type="module"></script>
+  <link href="/home/css/styles.css" rel="stylesheet" />
+  <script src="/home/js/index.js" type="module"></script>
+  <script src="/home/js/scripts.js" type="module"></script>
+  <script src="/home/js/form-scripts.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     .d-none {
       display: none;
@@ -72,19 +76,22 @@
           </path>
         </svg><!-- <i class="fas fa-bars"></i> Font Awesome fontawesome.com -->
       </button>
-      <div class="navbar-collapse collapse" id="navbarResponsive" style="">
+      <div class="navbar-collapse collapse" id="navbarResponsive">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item mx-0 mx-lg-1">
+          <li class="nav-item mx-0 mx-lg-1" id="nav-plans">
             <a class="nav-link py-3 px-0 px-lg-3 rounded" href="#plans">Planos</a>
           </li>
-          <li class="nav-item mx-0 mx-lg-1">
+          <li class="nav-item mx-0 mx-lg-1" id="nav-about">
             <a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">Sobre</a>
           </li>
-          <li class="nav-item mx-0 mx-lg-1">
+          <li class="nav-item mx-0 mx-lg-1" id="nav-signup">
             <a class="nav-link py-3 px-0 px-lg-3 rounded" href="#signup">Cadastre-se</a>
           </li>
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded" href="login.html">Login</a>
+          <li class="nav-item mx-0 mx-lg-1" id="nav-login">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded" href="login">Login</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1" id="nav-logout" onclick="sair()">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded">Sair</a>
           </li>
         </ul>
       </div>
@@ -94,7 +101,7 @@
   <header class="masthead bg-primary text-white text-center">
     <div class="container d-flex align-items-center flex-column h-100 w-100">
       <!-- Masthead Avatar Image-->
-      <img class="masthead-avatar mb-5 w-100" src="/imgs/logo.png" alt="..." />
+      <img class="masthead-avatar mb-5 w-100" src="/public/imgs/logo.png" alt="..." />
       <!-- Masthead Heading-->
       <h1 class="masthead-heading text-uppercase mb-0">BEM VINDO!</h1>
       <!-- Icon Divider-->
@@ -164,7 +171,7 @@
                   </li>
                 </ul>
               </div>
-              <a onclick="comprarPlano()">Quero esse!</a>
+              <a onclick="comprarPlano('91bb900f-a7bd-4783-8aca-003526c20bef')">Quero esse!</a>
             </div>
           </div>
           <div class="col-sm-4 p-3">
@@ -194,7 +201,7 @@
                   </li>
                 </ul>
               </div>
-              <a onclick="comprarPlano()">Quero esse!</a>
+              <a onclick="comprarPlano('efcd22cb-720f-42cb-806f-54008499c3c5')">Quero esse!</a>
             </div>
           </div>
           <div class="col-sm-4 p-3">
@@ -224,7 +231,7 @@
                   </li>
                 </ul>
               </div>
-              <a onclick="comprarPlano()">Quero esse!</a>
+              <a onclick="comprarPlano('d0a7fe69-49fc-4708-b5e5-3d0bcebb5b3f')">Quero esse!</a>
             </div>
           </div>
           <div class="col-sm-4 p-3">
@@ -254,7 +261,7 @@
                   </li>
                 </ul>
               </div>
-              <a onclick="comprarPlano()">Quero esse!</a>
+              <a onclick="comprarPlano('3b6f9b14-abb2-4c92-b972-c505672fcd97')">Quero esse!</a>
             </div>
           </div>
         </div>
@@ -512,94 +519,6 @@
   <div class="copyright py-4 text-center text-white">
     <div class="container"><small>Copyright © Helpsystem</small></div>
   </div>
-  <!-- Portfolio Modals-->
-  <!-- Portfolio Modal 1-->
-  <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1"
-    aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header border-0">
-          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center pb-5">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-8">
-                <!-- Portfolio Modal - Title-->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">
-                  Plano Mensal
-                </h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom">
-                  <div class="divider-custom-line"></div>
-                  <div class="divider-custom-icon">
-                    <svg class="svg-inline--fa fa-star fa-w-18" aria-hidden="true" focusable="false" data-prefix="fas"
-                      data-icon="star" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
-                      data-fa-i2svg="">
-                      <path fill="currentColor"
-                        d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z">
-                      </path>
-                    </svg><!-- <i class="fas fa-star"></i> Font Awesome fontawesome.com -->
-                  </div>
-                  <div class="divider-custom-line"></div>
-                </div>
-                <!-- Portfolio Modal - Image-->
-                <img class="img-fluid rounded mb-5" src="/imgs/plans/gold.png" alt="..." />
-                <!-- Portfolio Modal - Text-->
-                <p class="mb-4">[DESCRIÇÃO DO PLANO]</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Portfolio Modal 2-->
-  <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" aria-labelledby="portfolioModal2"
-    aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header border-0">
-          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center pb-5">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-8">
-                <!-- Portfolio Modal - Title-->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">
-                  Plano Anual
-                </h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom">
-                  <div class="divider-custom-line"></div>
-                  <div class="divider-custom-icon">
-                    <svg class="svg-inline--fa fa-star fa-w-18" aria-hidden="true" focusable="false" data-prefix="fas"
-                      data-icon="star" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
-                      data-fa-i2svg="">
-                      <path fill="currentColor"
-                        d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z">
-                      </path>
-                    </svg><!-- <i class="fas fa-star"></i> Font Awesome fontawesome.com -->
-                  </div>
-                  <div class="divider-custom-line"></div>
-                </div>
-                <!-- Portfolio Modal - Image-->
-                <img class="img-fluid rounded mb-5" src="/imgs/plans/diamond.png" alt="..." />
-                <!-- Portfolio Modal - Text-->
-                <p class="mb-4">[DESCRIÇÃO DO PLANO]</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/scripts.js"></script>
-  <script src="js/form-scripts.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

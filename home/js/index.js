@@ -1,4 +1,6 @@
-import {createCustomer} from './api.js'
+import {createCustomer, makeSale} from '../../services/api.js'
+import {setWithExpiry, getWithExpiry} from '../../utils/local-storage.js'
+import {logout} from '../../utils/login.js'
 
 
 async function cadastrarCliente(){
@@ -18,12 +20,16 @@ async function cadastrarCliente(){
     var response = await createCustomer(userInfo);
     if (!response.ok){
         var error = await response.text();
-        cadastroErro("Falha ao cadastrar cliente: \n"+ error)
+        showCadastroErro("Falha ao cadastrar cliente: \n"+ error)
         return false;
     }else{
-        const customer = await response.text();
-        setWithExpiry('customer', customer, 6000); //Customer session expires in 6000 seconds (10 minutes)
-        cadastroSucesso();
+        const commonUser = await response.json();
+        setWithExpiry('commonUser', commonUser.detail, 600000); //CommonUser session expires in 600000 microseconds (10 minutes)
+        showCadastroSucesso();
+
+        document.getElementById('nav-login').classList.add('d-none');
+        document.getElementById('nav-signup').classList.add('d-none');
+        document.getElementById('nav-logout').classList.remove('d-none');
     }
 }
 
@@ -34,7 +40,7 @@ function getInputs(t,e=document.body){
     return n
 }
 
-function cadastroSucesso(){
+function showCadastroSucesso(){
     var successMessage = document.getElementById('submitSuccessMessage');
     var successButton = document.getElementById('submitButton');
 
@@ -70,7 +76,7 @@ function cadastroSucesso(){
     });
 }
 
-function cadastroErro(message){
+function showCadastroErro(message){
     Swal.fire({
         icon: 'error',
         title: 'Erro ao cadastrar',
@@ -86,31 +92,8 @@ function cadastroErro(message){
     })
 }
 
-function setWithExpiry(key, value, ttl=1800) {
-	const now = new Date()
-    const item = {
-        value: value,
-        expiry: now.getTime() + ttl,
-    }
-    localStorage.setItem(key, JSON.stringify(item));
-}
-
-function getWithExpiry(key) {
-	const itemStr = localStorage.getItem(key)
-	if (!itemStr) {
-		return 0
-	}
-	const item = JSON.parse(itemStr)
-	const now = new Date()
-	if (now.getTime() > item.expiry) {
-		localStorage.removeItem(key)
-		return -1
-	}
-	return item.value
-}
-
-function comprarPlano(){
-    const customer = getWithExpiry('customer')
+async function comprarPlano(plan){
+    const customer = getWithExpiry('commonUser')
     if (customer == 0){
         const Toast = Swal.mixin({
             toast: true,
@@ -132,7 +115,7 @@ function comprarPlano(){
           
           Toast.fire().then((result) => {
             if (result.isConfirmed) {
-                window.location.href = '#signup';
+                window.location.href = '/#signup';
             }else if (result.dismiss == 'cancel'){
                  window.location.href = '/login';            
             }
@@ -159,8 +142,83 @@ function comprarPlano(){
                 window.location.href = '/login';
             }
         });
+    }else{
+        const response = await makeSale(customer, plan);
+        if (!response.ok){
+            var error = await response.json();
+            if (error.sale_id)
+                showComprarPlanoExistente(error.sale_id)
+            else
+                showComprarPlanoErro(error.detail)
+            return false;
+        }else{
+            var message = await response.json();
+            showComprarPlanoSucesso(message.detail, message.sale_id)
+            return false;
+        }
     }
+
+}
+
+function showComprarPlanoErro(message){
+    Swal.fire({
+        icon: 'error',
+        title: 'Erro na compra',
+        text: message,
+        showConfirmButton: true,
+        confirmButtonColor: '#d33',
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+    })
+}
+
+function showComprarPlanoExistente(sale_id){
+    Swal.fire({
+        icon: 'warning',
+        title: 'Compra não realizada',
+        text: 'Você será redirecionado para a pagina do seu plano',
+        showConfirmButton: true,
+        confirmButtonColor: '#0d6efd',
+        confirmButtonText: 'Pagina do Plano',
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+    }).then(() => {
+        window.open('http://localhost:8000/sale/'+ sale_id +'/');
+    });
+}
+
+function showComprarPlanoSucesso(message, sale_id){
+    Swal.fire({
+        icon: 'success',
+        title: message,
+        text: 'Você será redirecionado para a pagina de pagamento.',
+        showConfirmButton: true,
+        confirmButtonColor: '#0d6efd',
+        confirmButtonText: 'Realizar Pagamento',
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+    }).then(() => {
+        window.open('http://localhost:8000/sale/'+ sale_id +'/');
+    });
+}
+
+function sair(){
+    logout();
+    window.location.href = '/';
 }
 
 window.cadastrarCliente = cadastrarCliente;
 window.comprarPlano = comprarPlano;
+window.sair = sair;

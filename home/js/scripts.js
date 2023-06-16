@@ -1,4 +1,14 @@
+import {isLogged} from '../../utils/login.js'
+
 window.addEventListener('DOMContentLoaded', event => {
+
+    if (isLogged()){
+        document.getElementById('nav-login').classList.add('d-none');
+        document.getElementById('nav-signup').classList.add('d-none');
+        document.getElementById('signup').classList.add('d-none');
+    }
+    else
+        document.getElementById('nav-logout').classList.add('d-none');
 
     // Navbar shrink function
     var navbarShrink = function () {
