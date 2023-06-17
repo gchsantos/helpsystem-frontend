@@ -55,7 +55,7 @@ function showloginErro(message){
         text: message,
         showConfirmButton: true,
         confirmButtonColor: '#d33',
-        timer: 5000,
+        timer: 500000,
         timerProgressBar: true,
         didOpen: (toast) => {
             toast.addEventListener('mouseenter', Swal.stopTimer)

@@ -33,12 +33,12 @@ export async function createCustomer(userInfo){
         
     var response = await fetch(api_url+"customer/", requestOptions);
     if (!response.ok){
-        return false;
+        return response;
     }
 
     var response = await fetch(api_url+"account/auth/", requestOptions);
     if (!response.ok){
-        return false;
+        return response;
     }
 
     const response_token = await response.json(); 
@@ -64,7 +64,7 @@ export async function Authenticate(userCredentials){
 
     const response = await fetch(api_url+"account/auth/", requestOptions);
     if (!response.ok){
-        return false;
+        return response;
     }
 
     const response_token = await response.json();  
