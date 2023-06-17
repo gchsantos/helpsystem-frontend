@@ -79,7 +79,7 @@ export async function makeSale(customer, plan){
 
     var raw = JSON.stringify({
         "plan": plan,
-        "seller": "0498743b-6ef9-48ea-8eee-1d8b03976588"
+        "seller": "4bb2d542-6880-4c82-ad86-886b5264530e"
     });
 
     var requestOptions = {
